@@ -1,8 +1,8 @@
-# Overview of Automotive SBOM
-## Background
+# 1. Overview of Automotive SBOM
+## 1.1. Background
 SBOM (Software Bill of Materials, a list of the components that make up software) was defined as a means of visualizing the components of software, and is expected to be used in a variety of industries for risk management purposes such as vulnerability and license compliance. The basic SBOM specification definition published by the NTIA of the United States in 2021 is referenced as the de facto global standard, and there are multiple definitions derived from it, but it is defined generically to cover a variety of areas such as SI (system integration) and embedded device development, and when applied to business practices and development methods specific to the automotive industry, issues arise such as the granularity of information and ambiguity of definitions.
 
-## Objectives of Automotive SBOM
+## 1.2. Objectives of Automotive SBOM
 To solve the above issues, Automotive SBOM is defined as an SBOM standard that follows the general-purpose SBOM specifications but has reconsidered its content specifically for use in the automotive industry. The objectives of Automotive SBOM are as follows:
 - Use as a common standard in the automotive supply chain
 OEMs, as final distributors, are required to carry out various risk management measures to fulfill their safety responsibilities, but this requires that suppliers provide the necessary information accurately and without omission or excess. The Automotive SBOM defines the format, content, and granularity of the information required by OEMs, and by being used as a common guideline for each supplier to create an SBOM that meets the requirements for good products, it will improve transparency and traceability throughout the supply chain.
@@ -15,27 +15,27 @@ The information that will become the content of SBOM is generally collected from
 <br>
 <br>
 
-# The Role of SBOM in Vehicle Development
-## Representation of SBOM for One Car
+# 2. The Role of SBOM in Vehicle Development
+## 2.1. Representation of SBOM for One Car
 To achieve SBOM-based management aimed at addressing various risks and complying with regulations while maintaining the traditional vehicle development system, the goal in the future is to represent the SBOM for an entire vehicle by associating management using PLM ( Product Lifecycle Management , information management centered on hardware development) with ALM ( Application Lifecycle Management , information management centered on software development). An image of how the SBOM for an entire vehicle would be represented is shown in Figure 1.
 The HBOM  (Hardware Bill of Materials, a list of the hardware that makes up a vehicle, as [HBOM defined by CISA](https://www.cisa.gov/resources-tools/resources/hardware-bill-materials-hbom-framework-supply-chain-risk-management) ) makes it possible to visualize the system structure of components such as ECUs. By associating and managing an SBOM with each of these components, it is possible to understand the software configuration of an entire vehicle. Rather than having one huge SBOM associated with an entire vehicle, the hierarchical structure of the SBOM is used, and the SBOM for each component is bundled using an external reference representation, making it easier to handle and maintain.
 
 ![alt text](./images/Figure-1.png)
-Figure 1 SBOM representation image for one car (ToBe)
+Figure 1 SBOM Representation Image for One Car (ToBe)
 
-## Relationship between Post-shipment Traceability Management and SBOM
+## 2.2. Relationship between Post-shipment Traceability Management and SBOM
 The state of a vehicle's software changes due to various reprocessing processes that are carried out after manufacturing and shipping, so the associated SBOM must also be updated accordingly. For this reason, each association is designed to enable traceability from the VIN for individual vehicle management, via the software part number corresponding to that VIN, to the corresponding SBOM. Figure 2 shows an image of traceability management at each stage.
 Furthermore, with the widespread use of in-vehicle software updates using OTA technology , it is expected that the software configuration of each vehicle will differ after shipment. Even in this situation, the use of SBOM is expected to become more widespread, as traceability of the corresponding SBOM from the VIN will enable compliance with regulations ( such as UN-R156 ) and reliable vulnerability response.
 
 ![alt text](./images/Figure-2.png)
-Figure 2 Post-shipment traceability management 
+Figure 2 Post-shipment Traceability Management 
 
 <br>
 <br>
 <br>
 
-# Automotive SBOM Specifications
-## Automotive SBOM Specification Configuration
+# 3. Automotive SBOM Specifications
+## 3.1. Automotive SBOM Specification Configuration
 The Automotive SBOM specification consists of the following definitions:
 - Data Fields
 Definition of data items to be handled as SBOM
@@ -48,16 +48,16 @@ The prerequisite for considering the definition of the Automotive SBOM specifica
 1. The data field is defined as the minimum data set required to understand the configuration information of the components (OSS, COTS, proprietary software, and completely in-house developed software) contained in the managed software.
 1. Each data field has an attribute of either Required or Optional. Optional data items can be used or not depending on the implementation requirements of each entity.
 1. There will be no data fields for dynamic information, such as vulnerability information. Instead, the data fields will contain information necessary to appropriately detect and manage risks associated with the managed software.
-1. As a means of detecting associated risks, each component, which is configuration information, is uniquely identified and can be matched with external data.
-1. Identify each component's known security vulnerabilities, applicable licenses, and providing entities as a means of detecting associated risks.
+   - As a means of detecting associated risks, each component, which is configuration information, is uniquely identified and can be matched with external data.
+   - Identify each component's known security vulnerabilities, applicable licenses, and providing entities as a means of detecting associated risks.
 1. There will be no data fields for managing entity-specific information, such as model information. This information will be defined separately as an implementation requirement for each entity as a schema outside the SBOM.
 
 The reasons for not simply adopting existing industry standards are as follows:
 - Standards such as CISA Baseline Attribute, NTIA Minimum Elements, and BSI TR-03183 do not support data items used by automotive OEM intellectual property departments for license verification, such as the URL of the component source and whether it has been modified. The same applies to the definition of minimum SBOM elements by J-Auto-ISAC.
 - The OpenChain Telco SBOM Guide Version 1.1 is SPDX-based, and restricting the SBOM document format may not be consistent with automotive industry practices.
 
-## Data Fields
-### Data Field Definitions
+## 3.2. Data Fields
+### 3.2.1. Data Field Definitions
 The Automotive SBOM data field definitions are shown in Table 1.
 
 Table 1 Automotive SBOM Data Field Definitions
@@ -161,7 +161,7 @@ The Automotive SBOM data fields are described below.
   - Includes  
   A type used to express when a component is included in or depends on another component. Specifically, CONTAINS, DEPENDS_ON, DEPENDENCY_OF, DYNAMIC_LINK, or STATIC_LINK (in the case of SPDX), or dependencies (in the case of CycloneDX) are used.  
   - Heritage , Pedigree  
- A type used to express that a given component was created by modifying another, higher-level component. Specifically, this can be represented using GENERATED_FROM or DESCENDANT_OF in SPDX, or pedigree in CycloneDX.  
+  A type used to express that a given component was created by modifying another, higher-level component. Specifically, this can be represented using GENERATED_FROM or DESCENDANT_OF in SPDX, or pedigree in CycloneDX.  
 - The completeness of the relationship expression can also be expressed using Unknown, None, Partial, and Known.  
 
 <ins>Specific examples</ins>  
@@ -242,7 +242,7 @@ Specific examples
 
 <br>
 
-### Declared License and Concluded License  
+### 3.2.2. Declared License and Concluded License  
 Declared License and Concluded License are license types defined in the SPDX specification, and because they are useful for correctly communicating license information when transferring software between organizations, Automotive SBOM also uses these definitions. However, the concepts of mandatory/optional are not directly consistent with the SPDX specification, and will be explained in detail here.  
 
 Specific examples  
@@ -267,10 +267,10 @@ Specific examples
         - Declared License " GPL-2.0-only or commercial license",  
         - Concluded License " GPL -2.0 - only"  
 
-### Checking for Consistency with Existing Industry Standards  
+### 3.2.3. Checking for Consistency with Existing Industry Standards  
 The results of the consistency check against the definitions of data fields in existing industry standards are shown in Table 2.  
 
-Table 2 The results of the consistency check  
+Table 2 The Results of the Consistency Check  
 |#|Automotive SBOM Data Fields|CISA Baseline Attribute|NTIA Minimum Elements|BSI TR-03183|J-Auto-ISAC SBOM minimum element|
 |:--:|:--|:--:|:--:|:--:|:--:|
 |1|SBOM Metadata|
@@ -317,17 +317,17 @@ Below is a list of data fields required by existing industry standards that are 
 - J-Auto-ISAC　SBOM minimum element  
   All are supported.  
 
-## Automation Support  
-### Document Format Definition  
+## 3.3. Automation Support  
+### 3.3.1. Document Format Definition  
 Automotive SBOM does not specify the SBOM document format or version to be written as an SBOM file , and as long as the required data fields defined in Chapter 3.2 can be written, the SBOM file may be written in any SBOM document format (SPDX, CycloneDX , etc.). For smooth distribution of SBOM, it is necessary to follow each SBOM document format in addition to the Automotive SBOM specifications.  
 
 ![alt text](./images/Figure-3.png)
-Figure 3 Automotive SBOM document format
+Figure 3 Automotive SBOM Document Format
 
-### Checking for Consistency with Existing Industry Standards  
+### 3.3.2. Checking for Consistency with Existing Industry Standards  
 Table 3 shows the results of the coverage check of the standard format of the SBOM document (whether the content of the SBOM document expressed in that format meets the data field requirements of the Automotive SBOM).   
 
-Table 3 SBOM document standard format coverage check  
+Table 3 SBOM Document Standard Format Coverage Check  
 |#|Automotive SBOM Data Fields|SPDX Lite @SPDX 2.3|ISO/IEC 5962:2021 (SPDX 2.3)|CycloneDX v1.6 (ECMA-424)|
 |:--:|:--|:--|:--|:--|
 |1|SBOM Metadata|
@@ -351,7 +351,7 @@ Table 3 SBOM document standard format coverage check
   
 (Legend: - :  Not applicable)  
 
-### Specific Expression Method (SPDX v2.3 format)  
+### 3.3.3. Specific Expression Method (SPDX v2.3 format)  
 Below is an example of Automotive SBOM expressed in SPDX v2.3 format.  
 
     {
@@ -399,21 +399,22 @@ Below is an example of Automotive SBOM expressed in SPDX v2.3 format.
     ]
     }  
   
-## Practice and Process  
-### SBOM File References  
+## 3.4. Practice and Process  
+### 3.4.1. SBOM File References  
 As described in Chapter 2.1, the SBOM file for a single vehicle is not represented as a single large SBOM file, but rather as a collection of multiple small SBOMs for each component part, bundled together using external references.  
 
 ![alt text](./images/Figure-4.png)
-Figure 4 How to represent an SBOM file for one vehicle and its advantages and disadvantages  
+Figure 4 How to Represent an SBOM File for One Vehicle and its Advantages and Disadvantages  
   
 
 Figure 5 shows an image of the reference relationship between the target software and its corresponding SBOM file .  
   
 
 ![alt text](./images/Figure-5.png)
-Figure 5 Image of reference relationship in SBOM file
+Figure 5 Image of Reference Relationship in SBOM File
 
 In this case, the contents (excerpt) of the SBOM files for T-Sample and B-Component are as follows:  
+
 T-Sample SBOM file
 
     DocumentName : T-Sample
@@ -463,71 +464,81 @@ B-Component SBOM file
     PackageFileName : C- Component.pkg
     PackageChecksum : SHA256: 9c50067a4da56808c6cfe11d6b71e1507c6115d2c22004ad7d3f6d4409367358
 
-### SBOM Request  
+### 3.4.2. SBOM Request  
 (Additional information will be added in due course)  
 
-### Generation of SBOM  
+### 3.4.3. Generation of SBOM  
 (Additional information will be added in due course)  
 
-### Operational Methods for Using SBOM  
+### 3.4.4. Operational Methods for Using SBOM  
 (Additional information will be added in due course)  
 
 <br>
 <br>
 <br>
 
-# SBOM-related Regulations and Industry Standards  
-## Situation in Each Country  
-### Trends in the United States  
-The US government has been actively promoting SBOM since 2018. The automotive industry is primarily regulated by the Department of Transportation, but is influenced by policies and requirements from other agencies .  
-- Department of Transportation - National Highway Traffic and Safety Administration  
-    　While NHTSA does not explicitly require automakers to create and utilize SBOMs , in its September 2022 paper, “ Cybersecurity Best Practices In " Practices for the Safety of Modern Vehicles ," the paper introduces SBOM as a method for implementing detailed voluntary cybersecurity practices .  
-- Cybersecurity and Infrastructure Security Administration  
-    　CISA is the cybersecurity division of the U.S. Department of Homeland Security and the central agency promoting SBOM , providing guidance to the executive branch of the U.S. government on cybersecurity best practices. CISA is also the primary oversight agency for implementing cybersecurity -related policies ( EO: 14028 “Improving the Nation's Cybersecurity” , EO: 13636 “Improving Critical Infrastructure Cybersecurity” , PPD: 21 “ Critical Infrastructure Security and Resilience” , EO: 13960 “Promoting the Use of Trustworthy Artificial Intelligence in the Federal Government” ) .  
-- Food and Drug Administration  
-    　The FDA, which regulates the medical device industry , was the first regulatory authority to require advanced cybersecurity features in the design, manufacture, and operation of regulated devices , and has mandated that SBOMs will be mandatory for FDA approval of all new medical devices starting in 2023. This is the first time that SBOMs have been mandated by regulation .
-- Department of Defense  
-    　The U.S. Department of Defense ( DoD) is a major purchaser of automotive products, including cars, trucks, military vehicles, and related software and equipment . The DoD has an extensive list of requirements for military and non-military equipment , including the Federal Acquisition Regulation, the Defense Federal Acquisition Regulation Supplement, and the Federal Risk and Authorization Management Program , which primarily covers cloud services , and emphasizes the need for SBOM as a critical element of cybersecurity supply chain risk management . While there are currently no regulations requiring SBOM , it is likely that they will be adopted in a proposal to add requirements to the FAR (information as of December 4, 2023 ).  
-    　Based on these trends, the automotive industry must prepare for SBOM requirements for software products . While SBOM for vehicles and other cyber -physical systems is not explicitly addressed , it is likely that they will be required as DoD procurements increase .  
-- National Institute of Standards and Technology  
-    　NIST, part of the Department of Commerce , publishes standards for SBOM and other software and hardware cybersecurity features at the direction of the White House , which impact the automotive industry by defining specifications for regulations and requirements issued by other U.S. government agencies .
-- Department of Energy  
-    　The electric power industry regulator, has clear national security implications and has adopted restrictive policies regarding information sharing outside the industry. Idaho National Labs is actively involved in developing and disseminating SBOM guidance for the energy industry . Certain portions of DoE guidance apply directly to the automotive industry, specifically including authority over the U.S. power grid, including charging stations for electric vehicles.  
-- Federal Communications Commission  
-    　The FCC administers the Cyber Trust Mark , which certifies compliance with minimum security and supply chain requirements for IoT devices (this program excludes automobiles and automotive equipment, as they are regulated by the NHTSA ).  
+# 4. SBOM-related Regulations and Industry Standards  
+## 4.1. Situation in Each Country  
+### 4.1.1. Trends in the United States  
+The US government has been actively promoting SBOM since 2018. The automotive industry is primarily regulated by the Department of Transportation, but is influenced by policies and requirements from other agencies.  
+**Department of Transportation - National Highway Traffic and Safety Administration**  
+  While NHTSA does not explicitly require automakers to create and utilize SBOMs , in its September 2022 paper, “ Cybersecurity Best Practices In " Practices for the Safety of Modern Vehicles ," the paper introduces SBOM as a method for implementing detailed voluntary cybersecurity practices.  
 
-### Trends in the Europe  
-- Cybersecurity Resilience Act and Related Regulations and Guidance  
-    　The EU is expected to provisionally pass the CRA in early 2024, with it expected to become law in early 2027. It will require SBOMs for a wide range of products , but vehicles and certain other products are regulated by other rules and are currently exempt from the CRA .  
-- Federal Office for Information Security - Germany  
-    　Germany's cybersecurity government agency, is considering SBOM as part of the CRA . BSI developed a vulnerability notification standard called CSAF , and the U.S. CISA and a private working group adopted CSAF as the primary format for the VEX program, which allows suppliers to advise vendors of exploitability of vulnerabilities and provide remediation actions. SBOM, CSAF, and vulnerability data from the NVD enable end users to automate vulnerability processing and identify vulnerable components in their software inventory .  
+**Cybersecurity and Infrastructure Security Administration**  
+  CISA is the cybersecurity division of the U.S. Department of Homeland Security and the central agency promoting SBOM , providing guidance to the executive branch of the U.S. government on cybersecurity best practices. CISA is also the primary oversight agency for implementing cybersecurity -related policies ( EO: 14028 “Improving the Nation's Cybersecurity” , EO: 13636 “Improving Critical Infrastructure Cybersecurity” , PPD: 21 “ Critical Infrastructure Security and Resilience” , EO: 13960 “Promoting the Use of Trustworthy Artificial Intelligence in the Federal Government” ).  
 
-### Trends in Japan  
-- Ministry of Economy, Trade and Industry  
-    　METI has a strong interest in SBOM as part of its international standardization strategy, and METI will publish SBOM guidelines in 2023 .
+**Food and Drug Administration**  
+  　The FDA, which regulates the medical device industry , was the first regulatory authority to require advanced cybersecurity features in the design, manufacture, and operation of regulated devices , and has mandated that SBOMs will be mandatory for FDA approval of all new medical devices starting in 2023. This is the first time that SBOMs have been mandated by regulation.
 
-## Industry Trends  
-- Health Information Sharing and Analysis Center  
-    　H-ISAC is conducting a long-term proof-of-concept (PoC) on the use of SBOMs between Medical Device Manufacturers Association members and Health Delivery Organizations ( HDOs, etc. ) . H-ISAC has also launched a pilot for an SBOM clearinghouse, where MDMA members can upload their SBOMs to a central, access-controlled database that is accessible to the U.S. FDA for compliance purposes and selectively accessible to their HDO customers.  
-- Energy - Public/Private Proof of Concept (Sponsored by US Department of Energy Idaho  
-    　Promoting SBOM PoC by electric power companies and others .  
-- Information and Communications Technology  
-    　Red Hat 's comprehensive security information program including a new implementation of SBOM and VEX , Cisco's contributions to the US NTIA and CISA SBOM programs since 2018 , and Google's Android project 's explanation of the steps for creating an SBOM for developers and their approach to SBOM in the project .
+**Department of Defense**  
+  The U.S. Department of Defense ( DoD) is a major purchaser of automotive products, including cars, trucks, military vehicles, and related software and equipment . The DoD has an extensive list of requirements for military and non-military equipment , including the Federal Acquisition Regulation, the Defense Federal Acquisition Regulation Supplement, and the Federal Risk and Authorization Management Program , which primarily covers cloud services , and emphasizes the need for SBOM as a critical element of cybersecurity supply chain risk management . While there are currently no regulations requiring SBOM , it is likely that they will be adopted in a proposal to add requirements to the FAR (information as of December 4, 2023 ).  
+  Based on these trends, the automotive industry must prepare for SBOM requirements for software products . While SBOM for vehicles and other cyber -physical systems is not explicitly addressed , it is likely that they will be required as DoD procurements increase.  
+
+**National Institute of Standards and Technology**  
+  NIST, part of the Department of Commerce , publishes standards for SBOM and other software and hardware cybersecurity features at the direction of the White House , which impact the automotive industry by defining specifications for regulations and requirements issued by other U.S. government agencies.
+
+**Department of Energy**  
+  The electric power industry regulator, has clear national security implications and has adopted restrictive policies regarding information sharing outside the industry. Idaho National Labs is actively involved in developing and disseminating SBOM guidance for the energy industry . Certain portions of DoE guidance apply directly to the automotive industry, specifically including authority over the U.S. power grid, including charging stations for electric vehicles.  
+
+**Federal Communications Commission**  
+  The FCC administers the Cyber Trust Mark , which certifies compliance with minimum security and supply chain requirements for IoT devices (this program excludes automobiles and automotive equipment, as they are regulated by the NHTSA ).  
+
+### 4.1.2. Trends in the Europe  
+**Cybersecurity Resilience Act and Related Regulations and Guidance**  
+  The EU is expected to provisionally pass the CRA in early 2024, with it expected to become law in early 2027. It will require SBOMs for a wide range of products , but vehicles and certain other products are regulated by other rules and are currently exempt from the CRA.  
+
+**Federal Office for Information Security - Germany**  
+  Germany's cybersecurity government agency, is considering SBOM as part of the CRA . BSI developed a vulnerability notification standard called CSAF , and the U.S. CISA and a private working group adopted CSAF as the primary format for the VEX program, which allows suppliers to advise vendors of exploitability of vulnerabilities and provide remediation actions. SBOM, CSAF, and vulnerability data from the NVD enable end users to automate vulnerability processing and identify vulnerable components in their software inventory.  
+
+### 4.1.3. Trends in Japan  
+**Ministry of Economy, Trade and Industry**  
+  METI has a strong interest in SBOM as part of its international standardization strategy, and METI will publish SBOM guidelines in 2023.
+
+## 4.2. Industry Trends  
+**Health Information Sharing and Analysis Center**  
+  H-ISAC is conducting a long-term proof-of-concept (PoC) on the use of SBOMs between Medical Device Manufacturers Association members and Health Delivery Organizations ( HDOs, etc. ) . H-ISAC has also launched a pilot for an SBOM clearinghouse, where MDMA members can upload their SBOMs to a central, access-controlled database that is accessible to the U.S. FDA for compliance purposes and selectively accessible to their HDO customers.  
+**Energy - Public/Private Proof of Concept (Sponsored by US Department of Energy Idaho**  
+  Promoting SBOM PoC by electric power companies and others.  
+
+**Information and Communications Technology**  
+  Red Hat 's comprehensive security information program including a new implementation of SBOM and VEX , Cisco's contributions to the US NTIA and CISA SBOM programs since 2018 , and Google's Android project 's explanation of the steps for creating an SBOM for developers and their approach to SBOM in the project.
 
 
-## Industry Standard  
-- Society of Automotive Engineers  
-    　In January 2024, the Society of Automotive Engineers became the first standards body to consider SBOM for the automotive industry , and this effort, as a subtask force under the Vehicle Cybersecurity Systems Engineering Committee (TEVEES18A) , is actively collaborating with Auto-ISAC's SBOM project to harmonize standards and practices . SAE is also collaborating with ISO36 on several standards for the automotive and aviation industries , the most relevant of which is ISO/SAE 21434. SAE continues to collaborate with ISO on new versions of applicable standards and for the potential inclusion of SBOM in new versions of ISO/SAE 21434 .  
-- International Organization for Standardization (ISO/SAE 21434, 5962:2021, TC 292/22373,26262)  
-    　ISO works to set standards for many industries, including automotive , and several of its standards are relevant to SBOM ( ISO/SAE 21434, 5962:2021 SPDX 2.2.1, TC292/ISO 22373 Cybersecurity and Resiliency in Supply Chains, ISO 26262 ).  
-- UNECE Regulations  
-    　The United Nations Economic Commission for Europe 's World Forum for Harmonization of Vehicle Regulations has approved two rules closely related to SBOM: UNECE WP.29/R155 requires OEMs to monitor and track cybersecurity issues related to their vehicles , and UNECE WP.29/R156 requires an update mechanism for loading new software onto vehicles to fix vulnerabilities .  
+## 4.3. Industry Standard  
+**Society of Automotive Engineers**  
+  In January 2024, the Society of Automotive Engineers became the first standards body to consider SBOM for the automotive industry , and this effort, as a subtask force under the Vehicle Cybersecurity Systems Engineering Committee (TEVEES18A) , is actively collaborating with Auto-ISAC's SBOM project to harmonize standards and practices . SAE is also collaborating with ISO36 on several standards for the automotive and aviation industries , the most relevant of which is ISO/SAE 21434. SAE continues to collaborate with ISO on new versions of applicable standards and for the potential inclusion of SBOM in new versions of ISO/SAE 21434.  
+
+**International Organization for Standardization (ISO/SAE 21434, 5962:2021, TC 292/22373,26262)**  
+  ISO works to set standards for many industries, including automotive , and several of its standards are relevant to SBOM ( ISO/SAE 21434, 5962:2021 SPDX 2.2.1, TC292/ISO 22373 Cybersecurity and Resiliency in Supply Chains, ISO 26262 ).  
+
+**UNECE Regulations**  
+  The United Nations Economic Commission for Europe 's World Forum for Harmonization of Vehicle Regulations has approved two rules closely related to SBOM: UNECE WP.29/R155 requires OEMs to monitor and track cybersecurity issues related to their vehicles , and UNECE WP.29/R156 requires an update mechanism for loading new software onto vehicles to fix vulnerabilities.  
 
 <br>
 <br>
 <br>
 
-# Definition of Terms
+# 5. Definition of Terms
 - SBOM data  
 The data that makes up the SBOM, a collection of each data field and its corresponding value.  
 - SBOM file  
@@ -553,31 +564,31 @@ In this book, software that does not include COTS or proprietary software and is
 <br>
 <br>
 
-# Appendix (Supplementary Information)  
-## License Type Definition in SPDX  
+# 6. Appendix (Supplementary Information)  
+## 6.1. License Type Definition in SPDX  
 Why are there two different license fields for a package (Concluded License and Declared License)?  
-The Concluded License field is the license the SPDX file creator believes governs the package. The Declared License is what the authors of a project believe governs the package. Often these fields have the same value. When they are different the SPDX file creator should provide background information in the Comments on License field.  
+The **Concluded** License field is the license the SPDX file creator believes governs the package. The **Declared** License is what the authors of a project believe governs the package. Often these fields have the same value. When they are different the SPDX file creator should provide background information in the Comments on License field.  
 
-## License Type Definitions in BSI ( TR-03183 )  
-Declared licenses are all licenses that have been declared by the creator of a component.  
+## 6.2. License Type Definitions in BSI ( TR-03183 )  
+**Declared** licenses are all licenses that have been declared by the creator of a component.  
 A special case is that the primary licensee is forced by the component creator to choose from different sets of licenses which are mutually exclusive. A classic example is Qt where the primary licensee has to decide between GPL and a proprietary license; only the made choice can be handed further down the supply chain. Hence the associated licenses can differ from the declared licenses.  
-Associated licenses are all licenses under which a component can be used by the licensee.  
-Concluded licenses are determined by the licensee that is the component creator of the primary component of the current SBOM.  
+**Associated** licenses are all licenses under which a component can be used by the licensee.  
+**Concluded** licenses are determined by the licensee that is the component creator of the primary component of the current SBOM.  
 The statement about multiple component instances with different meta-information also applies if only the license information differs.  
 
-## License Notation Example  
+## 6.3. License Notation Example  
 OSS licenses in the Automotive SBOM are represented using identifiers defined in the SPDX License List .  
 Because software may be provided under a choice of more than one license, or because a set of licenses may be needed to represent a binary program built by compiling and linking several different source files, each covered by a different license, predefined operators (such as AND, OR, WITH, +, etc.) can be used to express this.  
 - If you need to comply with more than one license at the same time  
-  LGPL-2.1-only AND MIT  
+  LGPL-2.1-only **AND** MIT  
 - If offered under one or more license options  
-  LGPL-2.1-only OR MIT OR BSD-3-Clause  
+  LGPL-2.1-only **OR** MIT **OR** BSD-3-Clause  
 - If special exceptions apply to a particular license  
-  GPL-2.0-or-later WITH Bison-exception-2.2  
+  GPL-2.0-or-later **WITH** Bison-exception-2.2  
 - To represent the current or later version of the License  
-  CDDL-1.0 +  
+  CDDL-1.0 **+**  
 
-## SBOM Types Definitions in CISA  
+## 6.4. SBOM Types Definitions in CISA  
 ### Design SBOM
 - SBOM is created based on planning information before software development, even if the components do not yet exist.  
 - Created based on specifications, RFPs, etc.  
@@ -597,7 +608,7 @@ Because software may be provided under a choice of more than one license, or bec
 - SBOM of the entire system when the software is running on the system  
 - Created based on information about the software that actually runs in the system's execution environment  
 
-## Definition of SBOM Levels in BSI TR-03183  
+## 6.5. Definition of SBOM Levels in BSI TR-03183  
 ### Top-level SBOM
 ![alt text](./images/BSI-1-Top-level%20SBOM.png)
 - In addition to a complete description of the major component, the SBOM includes a complete description of all components on which the major component directly depends.  
@@ -620,7 +631,7 @@ Because software may be provided under a choice of more than one license, or bec
 <br>
 <br>
 
-# Appendix (external materials)  
+# 7. Appendix (External Materials)  
 - sbom_minimum_elements_report.pdf  
 - Framing Software Component Transparency (2024) | CISA  
 - Technical Guideline TR-03183: Cyber Resilience Requirements for Manufacturers and Products  
@@ -633,7 +644,7 @@ Because software may be provided under a choice of more than one license, or bec
 
 Change History
 
-|#|version|date|changes|manager|
+|#|version|date|main changes|manager|
 |:--:|:--|:--|:--|:--|
 |1|version 1.0|July 14, 2025|Mobility SBOM to Automotive SBOM|Ayumi Watanabe|
 |2|version 1.1|January 19, 2026|Conversion to a Markdown file|Ayumi Watanabe|
