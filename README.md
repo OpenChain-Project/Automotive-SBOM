@@ -10,7 +10,7 @@ To achieve this mission, we aim to:
 
 # Meetings
 Please refer to the following URL for the community meeting schedule. We look forward to your participation!
-Meeting Scheduleh[ttps://openchain-project.github.io/Automotive-Open-Source-Governance-Monthly/]
+Meeting Schedule[https://openchain-project.github.io/Automotive-Open-Source-Governance-Monthly/]
 
 # Join us  
 Everyone is welcome to be part of Automotive SBOM Project(this is a part of OpenChain Automotive Work Group). Our main contact point is [our mailing list](https://lists.openchainproject.org/g/automotive-sbom).
