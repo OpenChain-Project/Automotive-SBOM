@@ -599,7 +599,7 @@ Because software may be provided under a choice of more than one license, or bec
 - If special exceptions apply to a particular license  
   GPL-2.0-or-later **WITH** Bison-exception-2.2  
 - To represent the current or later version of the License  
-  CDDL-1.0**+**
+  CDDL-1.0+
 
 ## 6.4. SBOM Types Definitions in CISA  
 ### Design SBOM
